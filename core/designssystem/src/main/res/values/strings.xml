@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_convertor">Currency Convertor</string>
+    <string name="currency_convertor_description">Check live rates, converot between currencies and more</string>
+    <string name="amount">Amount</string>
+    <string name="converted_amount">Converted Amount</string>
+    <string name="indicative_exhange_rate">Indicative Exchange Rate</string>
+</resources>

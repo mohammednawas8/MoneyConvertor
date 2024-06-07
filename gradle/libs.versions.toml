@@ -71,6 +71,14 @@ mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version = "5.
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version = "2.2.0" }
 
 [plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+moneyconvertor-android-library = { id = "moneyConvertor.android.library", version = "unspecified" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+moneyconvertor-jvm = { id = "moneyConvertor.jvm.library", version = "unspecified" }
+moneyconvertor-android-hilt = { id = "moneyConvertor.android.hilt", version = "unspecified" }
+moneyconvertor-android-compose = { id = "moneyConvertor.android.compose", version = "unspecified" }
+moneyconvertor-android-feature = { id = "moneyConvertor.android.feature", version = "unspecified" }
 
