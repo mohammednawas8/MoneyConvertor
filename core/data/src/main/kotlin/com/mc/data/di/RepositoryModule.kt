@@ -1,7 +1,7 @@
 package com.mc.data.di
 
 import com.mc.data.repository.CurrencyRepository
-import com.mc.data.repository.CurrencyRepositoryImpl
+import com.mc.data.repository.OfflineFirstCurrencyRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindCurrencyRepository(impl: CurrencyRepositoryImpl): CurrencyRepository
+    abstract fun bindCurrencyRepository(impl: OfflineFirstCurrencyRepository): CurrencyRepository
 
 }

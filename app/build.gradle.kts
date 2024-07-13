@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.moneyconvertor.android.hilt)
+    alias(libs.plugins.moneyconvertor.android.room)
 }
 
 android {
@@ -33,6 +34,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -68,8 +71,15 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.androidx.work)
+    implementation(libs.hilt.ext.work)
+    implementation(libs.androidx.navigation.compose)
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
+
     implementation(project(":core:network"))
     implementation(project(":core:designssystem"))
     implementation(project(":feature:currency-convertor"))
+    implementation(project(":core:database"))
+    implementation(project(":core:data"))
 
 }

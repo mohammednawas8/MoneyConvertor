@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,21 +50,21 @@ import com.mc.designsystem.theme.MoneyConvertorTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun CurrencyConvertorRoute(
+internal fun CurrencyConvertorRoute(
     viewModel: CurrencyConvertorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CurrencyConvertorScreen(
         uiState = uiState,
-        onFromCurrencyChange = {},
-        onToCurrencyChange = {},
-        onSwap = {}
+        onFromCurrencyChange = viewModel::onFromCurrencyChange,
+        onToCurrencyChange = viewModel::onToCurrencyChange,
+        onSwap = viewModel::swapCurrencies
     )
 }
 
 @Composable
-fun CurrencyConvertorScreen(
+internal fun CurrencyConvertorScreen(
     uiState: CurrencyConvertorUiState,
     onFromCurrencyChange:(CurrencyUiModel) -> Unit,
     onToCurrencyChange:(CurrencyUiModel) -> Unit,
@@ -100,9 +101,9 @@ fun CurrencyConvertorScreen(
                 allCurrencies = uiState.allCurrencies,
                 fromCurrency = uiState.fromCurrency,
                 toCurrency = uiState.toCurrency,
-                onFromCurrencyChanged = {},
-                onToCurrencyChanged = {},
-                onSwap = {}
+                onFromCurrencyChanged = onFromCurrencyChange,
+                onToCurrencyChanged = onToCurrencyChange,
+                onSwap = onSwap
             )
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -118,7 +119,7 @@ fun CurrencyConvertorScreen(
             Text(
                 text = uiState.indicativeExchangeRate,
                 modifier = Modifier.padding(horizontal = 22.dp),
-                style = MaterialTheme.typography.titleSmall.copy(
+                style = MaterialTheme.typography.titleMedium.copy(
                     color = Color.Black
                 )
             )
@@ -129,7 +130,9 @@ fun CurrencyConvertorScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier
+                            .size(30.dp)
+                            .testTag("loading")
                     )
                 }
             }
@@ -259,7 +262,7 @@ fun CurrenciesSwapper(
                             tween(300)
                         )
                     }
-                },
+                }.testTag("swap"),
             contentAlignment = Alignment.Center
         ) {
             Icon(

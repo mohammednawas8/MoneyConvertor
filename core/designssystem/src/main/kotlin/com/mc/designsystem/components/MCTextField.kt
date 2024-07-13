@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mc.designsystem.theme.MoneyConvertorTheme
@@ -27,8 +29,8 @@ fun MCTextField(
     keyboardActions: KeyboardActions = KeyboardActions()
 ) {
     BasicTextField(
-        value = value,
-        onValueChange = { onValueChange(it) },
+        value = TextFieldValue(value, TextRange(value.length)),
+        onValueChange = { onValueChange(it.text) },
         modifier = modifier
             .clip(RoundedCornerShape(7.dp))
             .background(Color(0xFFEFEFEF))
