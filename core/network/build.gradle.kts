@@ -1,3 +1,13 @@
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
+private val apiKey = localProperties.getProperty("apiKey")
+
 plugins {
     alias(libs.plugins.moneyconvertor.android.library)
     alias(libs.plugins.moneyconvertor.android.hilt)
@@ -6,6 +16,14 @@ plugins {
 
 android {
     namespace = "com.mc.network"
+
+    defaultConfig {
+        buildConfigField(type = "String", name = "apiKey", value = "\"$apiKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

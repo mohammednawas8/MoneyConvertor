@@ -1,6 +1,7 @@
 package com.mc.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.mc.network.BuildConfig
 import com.mc.network.interceptor.HeadersInterceptor
 import com.mc.network.service.CurrencyService
 import com.mc.network.util.Constants
@@ -29,7 +30,7 @@ object NetworkModule {
         return OkHttpClient
             .Builder()
             .addNetworkInterceptor(loggingInterceptor)
-            .addNetworkInterceptor(HeadersInterceptor(mapOf("apiKey" to "cur_live_bN1PcVzWSogK7Bs5RzLWMtdktTIW8gQqbkLp0ieH")))
+            .addNetworkInterceptor(HeadersInterceptor(mapOf("apiKey" to BuildConfig.apiKey)))
             .build()
     }
 
