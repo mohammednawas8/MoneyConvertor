@@ -7,6 +7,8 @@ if (localPropertiesFile.exists()) {
 }
 
 private val apiKey = localProperties.getProperty("apiKey")
+    .takeIf { it != "null" }
+    ?: File("./ci_text.txt").readText()
 
 plugins {
     alias(libs.plugins.moneyconvertor.android.library)
