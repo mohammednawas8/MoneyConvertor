@@ -6,8 +6,7 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
-private val apiKey = localProperties.getProperty("apiKey")
-    .takeIf { it != "null" }
+private val apiKey = localProperties.getProperty("apiKey").takeIf { it != "null" }
     ?: File("./ci_text.txt").readText()
 
 plugins {
@@ -20,7 +19,7 @@ android {
     namespace = "com.mc.network"
 
     defaultConfig {
-        buildConfigField(type = "String", name = "apiKey", value = "\"$apiKey\"")
+        buildConfigField(type = "String", name = "apiKey", value = "\"$apiKey\"\"")
     }
 
     buildFeatures {
