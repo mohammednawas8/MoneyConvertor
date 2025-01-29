@@ -23,14 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MoneyConvertorTheme {
-//                MoneyConvertorNavGraph()
-
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text("ApiKey: ${BuildConfig.apiKey}")
-                }
+                MoneyConvertorNavGraph()
             }
         }
     }
