@@ -7,7 +7,7 @@ if (localPropertiesFile.exists()) {
 }
 
 private val apiKey = localProperties.getProperty("apiKey").takeIf { it != "null" }
-    ?: File("./ci_text.txt").readText()
+    ?: System.getenv("API_KEY")
 
 plugins {
     alias(libs.plugins.moneyconvertor.android.library)
@@ -19,7 +19,7 @@ android {
     namespace = "com.mc.network"
 
     defaultConfig {
-        buildConfigField(type = "String", name = "apiKey", value = "\"$apiKey\"\"")
+        buildConfigField(type = "String", name = "apiKey", value = "\"$apiKey\"")
     }
 
     buildFeatures {
