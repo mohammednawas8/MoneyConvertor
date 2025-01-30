@@ -5,8 +5,10 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,8 +73,9 @@ internal fun CurrencyConvertorScreen(
     onToCurrencyChange:(CurrencyUiModel) -> Unit,
     onSwap: () -> Unit
 ) {
-    MCBackgroundScreen {
-
+    MCBackgroundScreen(
+        hideKeyboardOnTap = true
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -166,9 +170,7 @@ private fun CurrencyConvertorCard(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        CurrenciesSwapper(
-            onSwap = onSwap
-        )
+        CurrenciesSwapper(onSwap = onSwap)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -224,6 +226,7 @@ private fun CurrencyInfoRow(
                 value = selectedCurrency.value,
                 onValueChange = { onCurrencyChange(selectedCurrency.copy(value = it)) },
                 modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(horizontal = 15.dp, vertical = 20.dp),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 )
