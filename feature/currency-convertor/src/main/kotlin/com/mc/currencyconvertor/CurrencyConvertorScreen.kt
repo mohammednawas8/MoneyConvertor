@@ -1,12 +1,12 @@
 package com.mc.currencyconvertor
 
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mc.designssystem.R
-import com.mc.designsystem.components.MCBackgroundScreen
+import com.mc.ui.MCBackgroundScreen
 import com.mc.designsystem.components.MCCard
 import com.mc.designsystem.components.MCTextField
 import com.mc.designsystem.components.MCTextMenu
@@ -70,14 +70,16 @@ internal fun CurrencyConvertorScreen(
     onToCurrencyChange:(CurrencyUiModel) -> Unit,
     onSwap: () -> Unit
 ) {
-    MCBackgroundScreen {
-
+    MCBackgroundScreen(
+        dismissKeyboard = true
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
         ) {
             Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = stringResource(id = R.string.currency_convertor),
                 style = MaterialTheme.typography.headlineLarge,
@@ -166,9 +168,7 @@ private fun CurrencyConvertorCard(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        CurrenciesSwapper(
-            onSwap = onSwap
-        )
+        CurrenciesSwapper(onSwap = onSwap)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -224,6 +224,7 @@ private fun CurrencyInfoRow(
                 value = selectedCurrency.value,
                 onValueChange = { onCurrencyChange(selectedCurrency.copy(value = it)) },
                 modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(horizontal = 15.dp, vertical = 20.dp),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 )

@@ -1,5 +1,6 @@
 package com.mc.designsystem.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenuItem
@@ -27,19 +29,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mc.designsystem.theme.Gray
 import com.mc.designsystem.theme.MoneyConvertorTheme
-import kotlin.math.exp
+import com.mc.designsystem.theme.WhiteBackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MCTextMenu(
-    modifier: Modifier = Modifier,
     selectedOption: String,
     options: List<String>,
-    onOptionSelected: (Int) -> Unit
+    onOptionSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var expanded by remember {
-        mutableStateOf(false)
-    }
+    val listState = rememberLazyListState()
+    var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
         modifier = modifier,
@@ -67,19 +68,21 @@ fun MCTextMenu(
         ExposedDropdownMenu(
             modifier = Modifier
                 .width(150.dp)
-                .height(300.dp),
+                .height(300.dp)
+                .background(WhiteBackground),
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
         ) {
             LazyColumn(
-                Modifier
+                state = listState,
+                modifier = Modifier
                     .width(150.dp)
                     .height(300.dp),
             ) {
                 itemsIndexed(options) { index, option ->
                     DropdownMenuItem(
                         text = {
-                               Text(text = option)
+                            Text(text = option)
                         },
                         onClick = {
                             onOptionSelected(index)
@@ -99,10 +102,9 @@ private fun MCTextMenuPreview() {
     MoneyConvertorTheme {
         MCTextMenu(
             selectedOption = "USD",
-            options = listOf( "USD", "EUR", "GBP", "JPY", "AUD")
-        ) {
-
-        }
+            options = listOf("USD", "EUR", "GBP", "JPY", "AUD"),
+            onOptionSelected = {}
+        )
     }
 }
 
