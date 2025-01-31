@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.moneyconvertor"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.moneyconvertor"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
 
@@ -77,10 +77,14 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
+    implementation(libs.androidx.compose.material2)
+    implementation(libs.androidx.compose.material.navigation)
+
     implementation(project(":core:network"))
     implementation(project(":core:designssystem"))
     implementation(project(":feature:currency-convertor"))
     implementation(project(":core:database"))
     implementation(project(":core:data"))
+    implementation(project(":core:model"))
 
 }

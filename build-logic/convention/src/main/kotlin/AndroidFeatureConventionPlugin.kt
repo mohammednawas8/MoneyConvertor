@@ -1,6 +1,7 @@
 import com.mc.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 
 class AndroidFeatureConventionPlugin : Plugin<Project> {
@@ -9,6 +10,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("moneyConvertor.android.library")
                 apply("moneyConvertor.android.hilt")
+                apply("kotlinx-serialization")
             }
 
             dependencies {
@@ -16,9 +18,11 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:ui"))
 
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
+                add("implementation", libs.findLibrary("androidx.navigation.compose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
-
+                add("implementation", libs.findLibrary("kotlin.serialization.json").get())
+                add("implementation", libs.findLibrary("androidx.compose.material2").get())
             }
         }
     }

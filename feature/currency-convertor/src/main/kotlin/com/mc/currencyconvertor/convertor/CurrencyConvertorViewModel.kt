@@ -1,23 +1,20 @@
-package com.mc.currencyconvertor
+package com.mc.currencyconvertor.convertor
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mc.data.repository.CurrencyRepository
 import com.mc.data.worker.SyncManager
-import com.mc.data.worker.WorkManagerSyncManager
 import com.mc.model.currency_convertor.CurrencyInfo
+import com.mc.model.currency_convertor.CurrencyType
 import com.mc.model.currency_convertor.ExchangeRates
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -51,6 +48,19 @@ class CurrencyConvertorViewModel @Inject constructor(
                 }
             }.launchIn(viewModelScope)
         initUiState()
+    }
+
+    fun getSelectedCurrencyIndex(type: CurrencyType): Int {
+       return when(type) {
+            CurrencyType.FROM -> {
+                val selectedCode = uiState.value.fromCurrency.code
+                exchangeRates.rates.keys.indexOf(selectedCode)
+            }
+            CurrencyType.TO -> {
+                val selectedCode = uiState.value.toCurrency.code
+                exchangeRates.rates.keys.indexOf(selectedCode)
+            }
+        }
     }
 
     private fun initUiState() {

@@ -1,9 +1,10 @@
-package com.mc.currencyconvertor
+package com.mc.currencyconvertor.convertor
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,8 +16,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -31,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,12 +52,17 @@ import com.mc.ui.MCBackgroundScreen
 import com.mc.designsystem.components.MCCard
 import com.mc.designsystem.components.MCTextField
 import com.mc.designsystem.components.MCTextMenu
+import com.mc.designsystem.theme.Gray
 import com.mc.designsystem.theme.MoneyConvertorTheme
+import com.mc.model.currency_convertor.CurrencyType
 import kotlinx.coroutines.launch
+
+typealias NavigateToCurrenciesSelector = (CurrencyType, Int, List<String>) -> Unit
 
 @Composable
 internal fun CurrencyConvertorRoute(
-    viewModel: CurrencyConvertorViewModel = hiltViewModel()
+    navigateToCurrenciesSelector: NavigateToCurrenciesSelector,
+    viewModel: CurrencyConvertorViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -59,15 +70,19 @@ internal fun CurrencyConvertorRoute(
         uiState = uiState,
         onFromCurrencyChange = viewModel::onFromCurrencyChange,
         onToCurrencyChange = viewModel::onToCurrencyChange,
-        onSwap = viewModel::swapCurrencies
+        onSwap = viewModel::swapCurrencies,
+        navigateToCurrenciesSelector = { currencies, type ->
+            navigateToCurrenciesSelector(type, viewModel.getSelectedCurrencyIndex(type), currencies)
+        }
     )
 }
 
 @Composable
 internal fun CurrencyConvertorScreen(
     uiState: CurrencyConvertorUiState,
-    onFromCurrencyChange:(CurrencyUiModel) -> Unit,
-    onToCurrencyChange:(CurrencyUiModel) -> Unit,
+    onFromCurrencyChange: (CurrencyUiModel) -> Unit,
+    onToCurrencyChange: (CurrencyUiModel) -> Unit,
+    navigateToCurrenciesSelector: (List<String>, CurrencyType) -> Unit,
     onSwap: () -> Unit
 ) {
     MCBackgroundScreen(
@@ -105,7 +120,8 @@ internal fun CurrencyConvertorScreen(
                 toCurrency = uiState.toCurrency,
                 onFromCurrencyChanged = onFromCurrencyChange,
                 onToCurrencyChanged = onToCurrencyChange,
-                onSwap = onSwap
+                onSwap = onSwap,
+                navigateToCurrenciesSelector = navigateToCurrenciesSelector
             )
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -151,6 +167,7 @@ private fun CurrencyConvertorCard(
     toCurrency: CurrencyUiModel,
     onFromCurrencyChanged: (CurrencyUiModel) -> Unit,
     onToCurrencyChanged: (CurrencyUiModel) -> Unit,
+    navigateToCurrenciesSelector: (List<String>, CurrencyType) -> Unit,
     onSwap: () -> Unit
 ) {
     MCCard(
@@ -162,7 +179,8 @@ private fun CurrencyConvertorCard(
             label = stringResource(id = R.string.amount),
             selectedCurrency = fromCurrency,
             currencies = allCurrencies,
-            onCurrencyChange = onFromCurrencyChanged
+            onCurrencyChange = onFromCurrencyChanged,
+            navigateToCurrenciesSelector = { navigateToCurrenciesSelector(it, CurrencyType.FROM) }
         )
 
 
@@ -176,7 +194,8 @@ private fun CurrencyConvertorCard(
             label = stringResource(id = R.string.converted_amount),
             selectedCurrency = toCurrency,
             currencies = allCurrencies,
-            onCurrencyChange = onToCurrencyChanged
+            onCurrencyChange = onToCurrencyChanged,
+            navigateToCurrenciesSelector = { navigateToCurrenciesSelector(it, CurrencyType.TO) }
         )
     }
 }
@@ -187,6 +206,7 @@ private fun CurrencyInfoRow(
     label: String,
     selectedCurrency: CurrencyUiModel,
     currencies: List<CurrencyUiModel>,
+    navigateToCurrenciesSelector: (List<String>) -> Unit,
     onCurrencyChange: (CurrencyUiModel) -> Unit
 ) {
 
@@ -209,13 +229,23 @@ private fun CurrencyInfoRow(
                 targetState = selectedCurrency.code,
                 modifier = Modifier.weight(1f),
             ) {
-                MCTextMenu(
-                    selectedOption = it,
-                    options = currencyCodes,
-                    onOptionSelected = { i ->
-                        onCurrencyChange(currencies[i].copy(value = selectedCurrency.value))
+                Box {
+                    Row(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .clickable { navigateToCurrenciesSelector(currencyCodes) }
+                    ) {
+                        Text(text = it, style = MaterialTheme.typography.titleMedium)
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = null,
+                            tint = Gray,
+                        )
                     }
-                )
+                }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -263,7 +293,8 @@ fun CurrenciesSwapper(
                             tween(300)
                         )
                     }
-                }.testTag("swap"),
+                }
+                .testTag("swap"),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -286,7 +317,8 @@ private fun CurrencyConvertorScreenPreview() {
             uiState = CurrencyConvertorUiState.PreviewData,
             onFromCurrencyChange = {},
             onToCurrencyChange = {},
-            onSwap = {}
+            onSwap = {},
+            navigateToCurrenciesSelector = { _, _ -> }
         )
     }
 }
