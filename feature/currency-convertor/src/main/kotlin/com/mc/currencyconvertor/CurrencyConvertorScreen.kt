@@ -1,11 +1,9 @@
 package com.mc.currencyconvertor
 
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mc.designssystem.R
-import com.mc.designsystem.components.MCBackgroundScreen
+import com.mc.ui.MCBackgroundScreen
 import com.mc.designsystem.components.MCCard
 import com.mc.designsystem.components.MCTextField
 import com.mc.designsystem.components.MCTextMenu
@@ -74,7 +71,7 @@ internal fun CurrencyConvertorScreen(
     onSwap: () -> Unit
 ) {
     MCBackgroundScreen(
-        hideKeyboardOnTap = true
+        dismissKeyboard = true
     ) {
         Column(
             modifier = Modifier
@@ -82,6 +79,7 @@ internal fun CurrencyConvertorScreen(
                 .statusBarsPadding()
         ) {
             Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = stringResource(id = R.string.currency_convertor),
                 style = MaterialTheme.typography.headlineLarge,
