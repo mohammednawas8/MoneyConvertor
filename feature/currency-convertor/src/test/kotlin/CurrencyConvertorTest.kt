@@ -1,4 +1,4 @@
-import com.mc.currencyconvertor.CurrencyConvertor
+import com.mc.currencyconvertor.convertor.CurrencyConvertor
 import org.junit.Test
 
 class CurrencyConvertorTest {

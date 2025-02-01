@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +49,6 @@ fun MCTextMenu(
         onExpandedChange = { expanded = it }
     ) {
         Row(
-            modifier = Modifier.menuAnchor(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(text = selectedOption, style = MaterialTheme.typography.titleMedium)
@@ -61,7 +61,7 @@ fun MCTextMenu(
                 tint = Gray,
                 modifier = Modifier.graphicsLayer {
                     rotationZ = if (expanded) 180f else 0f
-                }
+                }.menuAnchor()
             )
         }
 

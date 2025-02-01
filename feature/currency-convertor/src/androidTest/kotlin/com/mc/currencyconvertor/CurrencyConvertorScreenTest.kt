@@ -8,6 +8,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.mc.currencyconvertor.convertor.CurrencyConvertorScreen
+import com.mc.currencyconvertor.convertor.CurrencyConvertorUiState
+import com.mc.currencyconvertor.convertor.CurrencyUiModel
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,7 +26,8 @@ class CurrencyConvertorScreenTest {
                 uiState = CurrencyConvertorUiState(),
                 onFromCurrencyChange = {},
                 onToCurrencyChange = {},
-                onSwap = {}
+                onSwap = {},
+                navigateToCurrenciesSelector = { _, _ -> }
             )
         }
         composeTestRule.onNodeWithTag("loading").assertExists()
@@ -47,6 +51,7 @@ class CurrencyConvertorScreenTest {
                 uiState = uiState,
                 onFromCurrencyChange = {},
                 onToCurrencyChange = {},
+                navigateToCurrenciesSelector = {_ ,_ -> },
                 onSwap = {
                     val temp = fromCurrency
                     fromCurrency = toCurrency
