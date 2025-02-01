@@ -1,10 +1,14 @@
 package com.mc.currencyconvertor.currency_selector.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import com.mc.currencyconvertor.convertor.CurrencyConvertorViewModel
 import com.mc.currencyconvertor.currency_selector.CurrencySelectorRoute
+import com.mc.currencyconvertor.currency_selector.CurrencySelectorViewModel
 import com.mc.model.currency_convertor.CurrencyType
 import com.mc.ui.modalBottomSheet
 import kotlinx.coroutines.launch
@@ -33,12 +37,17 @@ fun NavController.navigateToCurrencySelector(
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.currencySelectorSheet(
-    navigateBack: () -> Unit
-) {
+    navigateBack: () -> Unit,
+    sharedViewModel: @Composable (NavBackStackEntry) -> CurrencyConvertorViewModel,
+    onFromCurrencySelected: (CurrencyConvertorViewModel, String) -> Unit,
+    onToCurrencySelected: (CurrencyConvertorViewModel, String) -> Unit,
+    ) {
     modalBottomSheet<CurrencySelectorRoute>(
         close = { navigateBack() }
-    ) { _, state ->
+    ) { navBackStackEntry, state ->
         val scope = rememberCoroutineScope()
+        val vm = sharedViewModel(navBackStackEntry)
+
         CurrencySelectorRoute(
             navigateBack = {
                 scope.launch {
@@ -46,7 +55,8 @@ fun NavGraphBuilder.currencySelectorSheet(
                     navigateBack()
                 }
             },
-            onCurrencySelected = {},
+            onFromCurrencySelected = { onFromCurrencySelected(vm, it) },
+            onToCurrencySelected = { onToCurrencySelected(vm, it) },
         )
     }
 }

@@ -120,6 +120,23 @@ class CurrencyConvertorViewModel @Inject constructor(
         return Pair(fromCurrency, toCurrency)
     }
 
+    fun onFromCurrencyCodeChange(code: String) {
+        val currencyUiModel = uiState.value.allCurrencies.first { it.code == code }
+        onFromCurrencyChange(
+            fromCurrency = currencyUiModel.copy(
+                value = uiState.value.fromCurrency.value
+            )
+        )
+    }
+
+    fun onToCurrencyCodeChange(code: String) {
+        val currencyUiModel = uiState.value.allCurrencies.first { it.code == code }
+        onToCurrencyChange(
+            toCurrency = currencyUiModel.copy(
+                value = uiState.value.toCurrency.value
+            )
+        )
+    }
 
     fun onFromCurrencyChange(fromCurrency: CurrencyUiModel) {
         when (val validationResult = fromCurrency.value.safeToDouble()) {

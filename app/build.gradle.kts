@@ -75,9 +75,11 @@ dependencies {
     implementation(libs.androidx.work)
     implementation(libs.hilt.ext.work)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
     implementation(libs.androidx.compose.material2)
+    implementation(libs.androidx.compose.material.navigation)
     implementation(libs.androidx.compose.material.navigation)
 
     implementation(project(":core:network"))
