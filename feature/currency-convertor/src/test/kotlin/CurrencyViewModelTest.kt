@@ -1,5 +1,5 @@
 import android.content.SharedPreferences
-import com.mc.currencyconvertor.CurrencyConvertorViewModel
+import com.mc.currencyconvertor.convertor.CurrencyConvertorViewModel
 import com.mc.model.currency_convertor.ExchangeRates
 import com.mc.testing.repository.TestCurrencyRepository
 import com.mc.testing.worker.TestWorkManagerSyncManager

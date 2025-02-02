@@ -1,4 +1,4 @@
-package com.mc.currencyconvertor
+package com.mc.currencyconvertor.convertor
 
 data class CurrencyConvertorUiState(
     val isLoading: Boolean = true,

@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.0"
+accompanist = "0.34.0"
 androidDesugarJdkLibs = "2.0.4"
 kotlin = "1.9.22"
 coreKtx = "1.13.1"
@@ -20,6 +21,8 @@ androidxLifecycle = "2.7.0"
 room = "2.6.1"
 workVersion = "2.9.0"
 kotlinxCoroutines = "1.8.0"
+composeNavigation = "2.8.6"
+androidxComposeMaterial2 = "1.8.0-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,11 +41,17 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
+androidx-compose-material2 = { group = "androidx.compose.material", name = "material", version.ref = "androidxComposeMaterial2" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
+androidx-compose-material-navigation = { group = "androidx.compose.material", name = "material-navigation", version.ref = "androidxComposeMaterial2" }
+androidx-compose-material-runtime = { group = "androidx.compose.material", name = "runtime", version.ref = "androidxComposeMaterial2" }
+androidx-compose-material-foundation = { group = "androidx.compose.material", name = "foundation", version.ref = "androidxComposeMaterial2" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workVersion" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+accompanist-navigation = { group = "com.google.accompanist", name = "accompanist-navigation-material", version.ref = "accompanist" }
 
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }

@@ -6,7 +6,8 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
-private val apiKey = localProperties.getProperty("apiKey")
+private val apiKey = localProperties.getProperty("apiKey").takeIf { it != "null" }
+    ?: System.getenv("API_KEY")
 
 plugins {
     alias(libs.plugins.moneyconvertor.android.library)

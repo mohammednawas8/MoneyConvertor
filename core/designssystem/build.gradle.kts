@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.mc.designssystem"
 }
+
+dependencies {
+    implementation(libs.androidx.core.ktx)
+}

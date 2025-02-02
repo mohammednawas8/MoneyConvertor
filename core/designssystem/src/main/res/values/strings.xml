@@ -5,4 +5,5 @@
     <string name="amount">Amount</string>
     <string name="converted_amount">Converted Amount</string>
     <string name="indicative_exhange_rate">Indicative Exchange Rate</string>
+    <string name="search">Search</string>
 </resources>
