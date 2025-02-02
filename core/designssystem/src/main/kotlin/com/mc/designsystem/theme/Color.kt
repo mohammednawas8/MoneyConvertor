@@ -9,3 +9,4 @@ val GrayBlack = Color(0xFF3C3C3C)
 val WhiteBackground = Color(0xfff6f6f6)
 
 val VeryLightGray = Color(0xFFE5E5E5)
+

@@ -3,9 +3,13 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.moneyconvertor.android.hilt)
     alias(libs.plugins.moneyconvertor.android.room)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
+    val versionCode = 1
+    val versionName = "1.0.0"
+
     namespace = "com.example.moneyconvertor"
     compileSdk = 35
 
@@ -13,8 +17,8 @@ android {
         applicationId = "com.example.moneyconvertor"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        this.versionCode = versionCode
+        this.versionName = versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -24,13 +28,17 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -77,6 +85,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
+    implementation(libs.kotlin.serialization.json)
 
     implementation(libs.androidx.compose.material2)
     implementation(libs.androidx.compose.material.navigation)

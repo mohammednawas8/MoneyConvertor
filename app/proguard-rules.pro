@@ -1,21 +1,21 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Keep all @Serializable classes (including your CurrencyType enum)
+-keep,allowobfuscation @kotlinx.serialization.Serializable class * { *; }
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep generated serializer classes (important for Enums)
+-keep class **$$serializer { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep enum serialization
+-keep class kotlinx.serialization.internal.EnumSerializer { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Ensure Kotlin metadata annotations are retained
+-keepattributes *Annotation*
+
+# Keep classes that extend KSerializer
+-keep class * extends kotlinx.serialization.KSerializer { *; }
+
+# Keep all enums' names and methods intact (including values() and valueOf())
+-keepclassmembers class * extends java.lang.Enum {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class * extends java.lang.Enum { *; }

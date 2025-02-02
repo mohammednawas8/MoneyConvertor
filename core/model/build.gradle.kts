@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.moneyconvertor.jvm)
-    id("kotlinx-serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
